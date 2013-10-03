@@ -1,0 +1,45 @@
+# Copyright (C) 2013 Filament
+# This file is distributed under the same license as the Filament package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Filament 1.0.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/filament\n"
+"POT-Creation-Date: 2013-10-03 23:11:07+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2013-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: filament.php:69
+msgid ""
+"Sorry, but there was an error processing your form submission, please try "
+"again."
+msgstr ""
+
+#: filament.php:162
+msgid "Deploy Filament"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Filament"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://filament.io/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Install & manage all your Web apps from a single place. Connect your website "
+"to Filament with this plugin, and never bug your developers again!"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "dtelepathy"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://www.dtelepathy.com/"
+msgstr ""
