@@ -51,6 +51,7 @@ The plugin is simple to install:
 * Fix code escaping issue
 * MP6 admin theme compatibility updates
 * Update compatible with to WordPress core 3.7.1
+* Switch to non-static Class structure for better backwards compatibility
 
 = 1.0.0 =
 * Initial commit

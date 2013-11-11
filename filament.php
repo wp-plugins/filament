@@ -27,10 +27,40 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 class Filament {
-    static $label = "Filament";
-    static $slug = "filament";
-    static $menu_hooks = array();
-    static $version = '1.0.1';
+    var $label = "Filament";
+    var $slug = "filament";
+    var $menu_hooks = array();
+    var $version = '1.0.1';
+
+    /**
+     * Initialize the plugin
+     *
+     * @uses add_action()
+     * @uses load_theme_textdomain()
+     * @uses Filament::_route()
+     */
+    function __construct() {
+        /**
+         * Make this plugin available for translation.
+         * Translations can be added to the /languages/ directory.
+         */
+        load_theme_textdomain( $this->slug, dirname( __FILE__ ) . '/locales' );
+
+        // Admin in-line styles
+        add_action( 'admin_head', array( &$this, 'admin_head' ) );
+
+        // Admin menu addition
+        add_action( 'admin_menu', array( &$this, 'admin_menu' ) );
+
+        // Code snippet output
+        add_action( 'wp_head', array( &$this, 'wp_head' ) );
+
+        // Plugin action link
+        add_filter( 'plugin_action_links', array( &$this, 'plugin_action_links' ), 10, 2 );
+
+        // Custom routing
+        add_action( 'init', array( &$this, 'route' ) );
+    }
 
     /**
      * Submit processing for admin_options view
@@ -40,16 +70,16 @@ class Filament {
      * @uses wp_verify_nonce()
      */
     private function _submit_admin_options() {
-        if( !wp_verify_nonce( $_REQUEST['_wpnonce'], self::$slug . '_admin_options' ) ) {
-            wp_die( __( "Sorry, but there was an error processing your form submission, please try again.", self::$slug ) );
+        if( !wp_verify_nonce( $_REQUEST['_wpnonce'], $this->slug . '_admin_options' ) ) {
+            wp_die( __( "Sorry, but there was an error processing your form submission, please try again.", $this->slug ) );
             return false;
         }
 
         $code_snippet = wp_check_invalid_utf8( htmlentities( stripslashes( $_REQUEST['single_drop'] ), ENT_QUOTES, "UTF-8" ) );
 
-        update_option( self::$slug . '_single_drop', $code_snippet );
+        update_option( $this->slug . '_single_drop', $code_snippet );
 
-        wp_redirect( admin_url( 'admin.php' ) . '?page=' . self::$slug ); exit;
+        wp_redirect( admin_url( 'admin.php' ) . '?page=' . $this->slug ); exit;
     }
 
     /**
@@ -57,9 +87,10 @@ class Filament {
      *
      * Output in-line styles for admin menu icon sizing
      */
-    static function admin_head() {
+    public function admin_head() {
         include( dirname( __FILE__ ) . '/views/admin/_styles.php' );
     }
+
 
     /**
      * Define the admin menu options for this plugin
@@ -68,11 +99,11 @@ class Filament {
      * @uses add_menu_page()
      * @uses add_submenu_page()
      */
-    static function admin_menu() {
-        self::$menu_hooks['deploy'] = add_menu_page( self::$label, self::$label, 'edit_themes', self::$slug, array( 'Filament', 'admin_options' ), plugins_url( 'assets/images/bolt.png', __FILE__ ) );
+    public function admin_menu() {
+        $this->menu_hooks['deploy'] = add_menu_page( $this->label, $this->label, 'edit_themes', $this->slug, array( &$this, 'admin_options' ), plugins_url( 'assets/images/bolt.png', __FILE__ ) );
 
         // Sign up for Filament
-        self::$menu_hooks['signup'] = add_submenu_page( self::$slug, self::$label, 'Signup for Filament', 'edit_themes', self::$slug . '/signup', array( 'Filament', 'admin_options' ) );
+        $this->menu_hooks['signup'] = add_submenu_page( $this->slug, $this->label, 'Signup for Filament', 'edit_themes', $this->slug . '/signup', array( &$this, 'admin_options' ) );
     }
 
     /**
@@ -82,40 +113,27 @@ class Filament {
      *
      * @uses get_option()
      */
-    static function admin_options() {
+    public function admin_options() {
         $data = array();
-        $action = self::$slug . '_admin_options';
+        $action = $this->slug . '_admin_options';
 
-        $data['single_drop'] = html_entity_decode( get_option( self::$slug . '_single_drop', "" ), ENT_QUOTES, "UTF-8" );
+        $data['single_drop'] = html_entity_decode( get_option( $this->slug . '_single_drop', "" ), ENT_QUOTES, "UTF-8" );
 
         include( dirname( __FILE__ ) . '/views/admin/admin_options.php' );
     }
 
     /**
-     * Initialize the plugin
+     * Initialization function to hook into the WordPress init action
      *
-     * @uses add_action()
-     * @uses load_theme_textdomain()
-     * @uses Filament::_route()
+     * Instantiates the class on a global variable and sets the class, actions
+     * etc. up for use.
      */
-    static function initialize() {
-        /**
-         * Make this plugin available for translation.
-         * Translations can be added to the /languages/ directory.
-         */
-        load_theme_textdomain( self::$slug, dirname( __FILE__ ) . '/locales' );
+    static function instance( ) {
+        global $Filament;
 
-        // Admin menu addition
-        add_action( 'admin_menu', array( 'Filament', 'admin_menu' ) );
-
-        // Code snippet output
-        add_action( 'wp_head', array( 'Filament', 'wp_head' ) );
-
-        // Plugin action link
-        add_filter( 'plugin_action_links', array( 'Filament', 'plugin_action_links' ), 10, 2 );
-
-        // Admin in-line styles
-        add_action( 'admin_head', array( 'Filament', 'admin_head' ) );
+        // Only instantiate the Class if it hasn't been already
+        if( !isset( $Filament ) )
+            $Filament = new Filament( );
     }
 
     /**
@@ -130,11 +148,11 @@ class Filament {
      *
      * @uses plugin_basename()
      */
-    static function plugin_action_links( $links, $file ) {
+    public function plugin_action_links( $links, $file ) {
         $new_links = array( );
 
         if( $file == plugin_basename( dirname( __FILE__ ) . '/' . basename( __FILE__ ) ) ) {
-            $new_links[] = '<a href="' . admin_url( 'admin.php?page=' . self::$slug ) . '">' . __( "Deploy Filament" ) . '</a>';
+            $new_links[] = '<a href="' . admin_url( 'admin.php?page=' . $this->slug ) . '">' . __( "Deploy Filament" ) . '</a>';
         }
 
         return array_merge( $new_links, $links );
@@ -146,7 +164,7 @@ class Filament {
      * This function will handling routing of form submissions to the appropriate
      * form processor.
      */
-    static function route() {
+    public function route() {
         $uri = $_SERVER['REQUEST_URI'];
         $uri_parse = parse_url( $uri );
         $protocol = isset( $_SERVER['HTTPS'] ) ? 'https' : 'http';
@@ -156,7 +174,7 @@ class Filament {
         $is_post = !!( $method == "POST" );
         parse_str( $_SERVER['QUERY_STRING'], $params );
 
-        if( basename( $uri_parse['path'] ) == 'admin.php' && isset( $params['page'] ) && $params['page'] == self::$slug . '/signup' ) {
+        if( basename( $uri_parse['path'] ) == 'admin.php' && isset( $params['page'] ) && $params['page'] == $this->slug . '/signup' ) {
           wp_redirect( "http://app.filament.io/users/register?utm_source=filament_wp&utm_medium=link&utm_content=plugin&utm_campaign=filament", 301 ); exit;
         }
 
@@ -170,10 +188,9 @@ class Filament {
      *
      * @uses get_option()
      */
-    static function wp_head() {
-        echo html_entity_decode( get_option( self::$slug . '_single_drop', "" ), ENT_QUOTES, "UTF-8" );
+    public function wp_head() {
+        echo html_entity_decode( get_option( $this->slug . '_single_drop', "" ), ENT_QUOTES, "UTF-8" );
     }
 }
 
-add_action( 'plugins_loaded', array( 'Filament', 'initialize' ) );
-add_action( 'init', array( 'Filament', 'route' ) );
+add_action( 'plugins_loaded', array( 'Filament', 'instance' ) );
