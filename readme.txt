@@ -46,6 +46,9 @@ The plugin is simple to install:
 1. Go to the plugin management page and enable the plugin
 
 == Changelog ==
+= 1.0.2 =
+* Fix form routing and submission handling
+
 = 1.0.1 =
 * Improve sanitization
 * Fix code escaping issue
@@ -57,6 +60,9 @@ The plugin is simple to install:
 * Initial commit
 
 == Upgrade Notice ==
+= 1.0.2 =
+Fixed critical form submission bugs, update now!
+
 = 1.0.1 =
 Fix some code escaping output issues, make sure to upgrade if you're having problems getting Filament to show up. You may need to re-paste your code snippet.
 

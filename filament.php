@@ -3,7 +3,7 @@
 Plugin Name: Filament
 Plugin URI: http://filament.io/
 Description: Install & manage all your Web apps from a single place. Connect your website to Filament with this plugin, and never bug your developers again!
-Version: 1.0.1
+Version: 1.0.2
 Author: dtelepathy
 Author URI: http://www.dtelepathy.com/
 Contributors: kynatro, dtelepathy, dtlabs
@@ -30,7 +30,7 @@ class Filament {
     var $label = "Filament";
     var $slug = "filament";
     var $menu_hooks = array();
-    var $version = '1.0.1';
+    var $version = '1.0.2';
 
     /**
      * Initialize the plugin
@@ -70,11 +70,6 @@ class Filament {
      * @uses wp_verify_nonce()
      */
     private function _submit_admin_options() {
-        if( !wp_verify_nonce( $_REQUEST['_wpnonce'], $this->slug . '_admin_options' ) ) {
-            wp_die( __( "Sorry, but there was an error processing your form submission, please try again.", $this->slug ) );
-            return false;
-        }
-
         $code_snippet = wp_check_invalid_utf8( htmlentities( stripslashes( $_REQUEST['single_drop'] ), ENT_QUOTES, "UTF-8" ) );
 
         update_option( $this->slug . '_single_drop', $code_snippet );
@@ -179,7 +174,9 @@ class Filament {
         }
 
         if( $is_post && isset( $_REQUEST['_wpnonce'] ) ) {
-            self::_submit_admin_options();
+            if( wp_verify_nonce( $_REQUEST['_wpnonce'], $this->slug . '_admin_options' ) ) {
+                self::_submit_admin_options();
+            }
         }
     }
 
