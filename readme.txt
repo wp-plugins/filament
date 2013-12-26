@@ -3,7 +3,7 @@ Contributors: kynatro, dtelepathy, dtlabs
 Donate link: http://www.dtelepathy.com/
 Tags: Filament, apps, SlideDeck, Google Analytics, Wufoo, Typekit, Qualaroo, Olark, KISSmetrics, Flare, FlipJack, Pinterest, Reddit, ShareThis, Pinterest, Stumbleupon, Twitter, social bar, dtelepathy, dtlabs, Facebook
 Requires at least: 3.0
-Tested up to: 3.7.1
+Tested up to: 3.8.0
 License: GPL3
 Stable tag: trunk
 
@@ -46,6 +46,10 @@ The plugin is simple to install:
 1. Go to the plugin management page and enable the plugin
 
 == Changelog ==
+= 1.0.3 =
+* Compatibility adjustment to routing to remove static method references
+* Works-with version update
+
 = 1.0.2 =
 * Fix form routing and submission handling
 
