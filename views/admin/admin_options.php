@@ -1,6 +1,14 @@
 <div class="wrap">
   <h2>Get Connected with Filament</h2>
 
+  <?php if( isset( $_GET['message'] ) && $_GET['message'] == "submit" ): ?>
+
+    <div class="updated">
+      <p><strong>Options Successfully Updated</strong></p>
+    </div>
+
+  <?php endif; ?>
+
   <form action="" method="post" id="<?php echo $action; ?>">
     <?php wp_nonce_field( $action ); ?>
 

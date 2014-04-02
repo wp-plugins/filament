@@ -60,6 +60,10 @@ class Filament {
 
         // Custom routing
         add_action( 'init', array( &$this, 'route' ) );
+
+        // Site Structure
+        add_action( 'wp_ajax_' . $this->slug . '_taxonomy_structure', array( &$this, 'ajax_taxonomy_structure' ) );
+        add_action( 'wp_ajax_noprive_' . $this->slug . '_taxonomy_structure', array( &$this, 'ajax_taxonomy_structure' ) );
     }
 
     /**
@@ -74,7 +78,7 @@ class Filament {
 
         update_option( $this->slug . '_single_drop', $code_snippet );
 
-        wp_redirect( admin_url( 'admin.php' ) . '?page=' . $this->slug ); exit;
+        wp_redirect( admin_url( 'admin.php' ) . '?page=' . $this->slug . '&message=submit' ); exit;
     }
 
     /**
@@ -115,6 +119,43 @@ class Filament {
         $data['single_drop'] = html_entity_decode( get_option( $this->slug . '_single_drop', "" ), ENT_QUOTES, "UTF-8" );
 
         include( dirname( __FILE__ ) . '/views/admin/admin_options.php' );
+    }
+
+    /**
+     * Public site taxonomy structure URL for Filament App knowledge
+     */
+    public function ajax_taxonomy_structure() {
+        header( 'Content-type: application/json' );
+
+        $structure = array(
+          'post_types' => array(),
+          'categories' => array(),
+          'tags' => array()
+        );
+
+        $post_types = wp_cache_get( 'post_types', $this->slug );
+        if( !$post_types ) {
+            $post_types = get_post_types( array( 'public' => true ) );
+            wp_cache_set( 'post_types', $post_types, $this->slug, 3600 );
+        }
+        
+        $categories = wp_cache_get( 'categories', $this->slug );
+        if( !$categories ) {
+            $categories = get_terms( 'category' );
+            wp_cache_set( 'categories', $categories, $this->slug, 3600 );
+        }
+        
+        $tags = wp_cache_get( 'tags', $this->slug );
+        if( !$tags ) {
+            $tags = get_terms( 'post_tag' );
+            wp_cache_set( 'tags', $tags, $this->slug, 3600 );
+        }
+
+        $structure['post_types'] = array_values( $post_types );
+        foreach( $categories as $category ) $structure['categories'][] = $category->slug;
+        foreach( $tags as $tag ) $structure['tags'][] = $tag->slug;
+        
+        exit( json_encode( $structure ) );
     }
 
     /**
