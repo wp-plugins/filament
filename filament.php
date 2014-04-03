@@ -176,9 +176,7 @@ class Filament {
     }
 
     public function load_admin_page() {
-        $url = trailingslashit( plugins_url() ) . basename( dirname( __FILE__ ) );
-
-        wp_enqueue_style( "{$this->slug}-admin", "{$url}/assets/admin.css", array(), $this->version, 'screen' );
+        wp_enqueue_style( "{$this->slug}-admin", filament_plugin_url( "/assets/admin.css" ), array(), $this->version, 'screen' );
     }
 
     /**
@@ -288,6 +286,10 @@ class Filament {
 
         echo html_entity_decode( get_option( $this->slug . '_single_drop', "" ), ENT_QUOTES, "UTF-8" );
     }
+}
+
+function filament_plugin_url( $path = "" ) {
+    return trailingslashit( plugins_url() ) . basename( dirname( __FILE__ ) ) . $path;
 }
 
 add_action( 'plugins_loaded', array( 'Filament', 'instance' ) );

@@ -39,21 +39,21 @@
 
     <div class="apps">
       <div data-app="flare">
-        <img src="http://filament.io/images/products/flare/flare-tile.png" alt="Flare" />
+        <img src="<?php echo filament_plugin_url( '/assets/images/flare.png' ); ?>" alt="Flare" />
         <a href="http://filament.io/flare?utm_source=filament_wp&utm_medium=app_tile&utm_content=flare&utm_campaign=filament">
           <strong>Flare</strong>
           <em>Make sharing content better for your visitors</em>
         </a>
       </div>
       <div data-app="ivy">
-        <img src="http://filament.io/images/products/ivy/ivy-tile.png" alt="Ivy" />
+        <img src="<?php echo filament_plugin_url( '/assets/images/ivy.png' ); ?>" alt="Ivy" />
         <a href="http://filament.io/ivy?utm_source=filament_wp&utm_medium=app_tile&utm_content=ivy&utm_campaign=filament">
           <strong>Ivy</strong>
           <em>Share the parts of your content that matter to you</em>
         </a>
       </div>
       <div data-app="passport">
-        <img src="http://filament.io/images/products/passport/passport-tile.png" alt="Passport" />
+        <img src="<?php echo filament_plugin_url( '/assets/images/passport.png' ); ?>" alt="Passport" />
         <a href="http://filament.io/passport?utm_source=filament_wp&utm_medium=app_tile&utm_content=passport&utm_campaign=filament">
           <strong>Passport</strong>
           <em>Showcase your online footprint better</em>
