@@ -1,4 +1,4 @@
-<div class="wrap">
+<div id="filament" class="wrap">
   <h2><?php _e( "Get Connected with Filament" ); ?></h2>
 
   <?php if( isset( $_GET['message'] ) && $_GET['message'] == "submit" ): ?>
@@ -30,4 +30,35 @@
       <input type="submit" name="submit" id="submit" class="button button-primary" value="Save Changes">
     </p>
   </form>
+
+  <hr />
+
+  <div id="about-filament">
+    <h2>Make Your Website Better With Filament</h2>
+    <h3>Apps that anyone can easily install to make visitors happier.</h3>
+
+    <div class="apps">
+      <div data-app="flare">
+        <img src="http://filament.io/images/products/flare/flare-tile.png" alt="Flare" />
+        <a href="http://filament.io/flare?utm_source=filament_wp&utm_medium=app_tile&utm_content=flare&utm_campaign=filament">
+          <strong>Flare</strong>
+          <em>Make sharing content better for your visitors</em>
+        </a>
+      </div>
+      <div data-app="ivy">
+        <img src="http://filament.io/images/products/ivy/ivy-tile.png" alt="Ivy" />
+        <a href="http://filament.io/ivy?utm_source=filament_wp&utm_medium=app_tile&utm_content=ivy&utm_campaign=filament">
+          <strong>Ivy</strong>
+          <em>Share the parts of your content that matter to you</em>
+        </a>
+      </div>
+      <div data-app="passport">
+        <img src="http://filament.io/images/products/passport/passport-tile.png" alt="Passport" />
+        <a href="http://filament.io/passport?utm_source=filament_wp&utm_medium=app_tile&utm_content=passport&utm_campaign=filament">
+          <strong>Passport</strong>
+          <em>Showcase your online footprint better</em>
+        </a>
+      </div>
+    </div>
+  </div>
 </div>

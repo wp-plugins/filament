@@ -9,7 +9,7 @@ Author URI: http://www.dtelepathy.com/
 Contributors: kynatro, dtelepathy, dtlabs
 License: GPL3
 
-Copyright 2012 digital-telepathy  (email : support@digital-telepathy.com)
+Copyright 2012 digital-telepathy  (email: support@filament.io)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -51,6 +51,9 @@ class Filament {
 
         // Admin menu addition
         add_action( 'admin_menu', array( &$this, 'admin_menu' ) );
+
+        // Admin page load
+        add_action( "admin_print_styles-toplevel_page_{$this->slug}", array( &$this, "load_admin_page" ) );
 
         // Code snippet output
         add_action( 'wp_head', array( &$this, 'wp_head' ) );
@@ -170,6 +173,12 @@ class Filament {
         // Only instantiate the Class if it hasn't been already
         if( !isset( $Filament ) )
             $Filament = new Filament( );
+    }
+
+    public function load_admin_page() {
+        $url = trailingslashit( plugins_url() ) . basename( dirname( __FILE__ ) );
+
+        wp_enqueue_style( "{$this->slug}-admin", "{$url}/assets/admin.css", array(), $this->version, 'screen' );
     }
 
     /**
