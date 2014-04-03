@@ -3,7 +3,7 @@
 Plugin Name: Filament
 Plugin URI: http://filament.io/
 Description: Install & manage all your Web apps from a single place. Connect your website to Filament with this plugin, and never bug your developers again!
-Version: 1.0.4
+Version: 1.1.0
 Author: dtelepathy
 Author URI: http://www.dtelepathy.com/
 Contributors: kynatro, dtelepathy, dtlabs
@@ -30,7 +30,7 @@ class Filament {
     var $label = "Filament";
     var $slug = "filament";
     var $menu_hooks = array();
-    var $version = '1.0.4';
+    var $version = '1.1.0';
 
     /**
      * Initialize the plugin
@@ -63,7 +63,7 @@ class Filament {
 
         // Site Structure
         add_action( 'wp_ajax_' . $this->slug . '_taxonomy_structure', array( &$this, 'ajax_taxonomy_structure' ) );
-        add_action( 'wp_ajax_noprive_' . $this->slug . '_taxonomy_structure', array( &$this, 'ajax_taxonomy_structure' ) );
+        add_action( 'wp_ajax_nopriv_' . $this->slug . '_taxonomy_structure', array( &$this, 'ajax_taxonomy_structure' ) );
     }
 
     /**
@@ -211,7 +211,7 @@ class Filament {
         parse_str( $_SERVER['QUERY_STRING'], $params );
 
         if( basename( $uri_parse['path'] ) == 'admin.php' && isset( $params['page'] ) && $params['page'] == $this->slug . '/signup' ) {
-          wp_redirect( "http://app.filament.io/users/register?utm_source=filament_wp&utm_medium=link&utm_content=plugin&utm_campaign=filament", 301 ); exit;
+          wp_redirect( "http://filament.io/?utm_source=filament_wp&utm_medium=link&utm_content=plugin&utm_campaign=filament", 301 ); exit;
         }
 
         if( $is_post && isset( $_REQUEST['_wpnonce'] ) ) {
@@ -227,6 +227,56 @@ class Filament {
      * @uses get_option()
      */
     public function wp_head() {
+        global $wp_query;
+
+        $metas = array(
+            'is-404' => is_404(),
+            'is-archive' => is_archive(),
+            'is-attachment' => is_attachment(),
+            'is-author' => is_author(),
+            'is-category' => is_category(),
+            'is-front-page' => is_front_page(),
+            'is-home' => is_home(),
+            'is-page' => is_page(),
+            'is-search' => is_search(),
+            'is-single' => is_single(),
+            'is-singular' => is_singular(),
+            'is-sticky' => is_sticky(),
+            'is-tag' => is_tag(),
+            'is-tax' => is_tax(),
+            'post-type' => get_post_type(),
+            'categories' => "",
+            'tags' => ""
+        );
+
+        if( $metas['is-category'] ) {
+            $category = get_category( get_query_var( 'cat' ), false );
+            $metas['categories'] = $category->slug;
+        } else if( $metas['is-singular'] ) {
+            $category_ids = wp_get_object_terms( $wp_query->post->ID, 'category', array( 'fields' => 'ids' ) );
+            $categories = array();
+
+            foreach( (array) $category_ids as $category_id ) {
+                $category = get_category( $category_id );
+                $categories[] = $category->slug;
+            }
+
+            $metas['categories'] = implode( $categories, "," );
+
+            $tag_objs = wp_get_post_tags( $wp_query->post->ID );
+            $tags = array();
+
+            foreach( (array) $tag_objs as $tag_obj ) {
+                $tags[] = $tag_obj->slug;
+            }
+
+            $metas['tags'] = implode( $tags, "," );
+        }
+
+        $namespace = $this->slug;
+
+        include( "views/_meta.php" );
+
         echo html_entity_decode( get_option( $this->slug . '_single_drop', "" ), ENT_QUOTES, "UTF-8" );
     }
 }

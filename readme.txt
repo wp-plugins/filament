@@ -46,6 +46,12 @@ The plugin is simple to install:
 1. Go to the plugin management page and enable the plugin
 
 == Changelog ==
+= 1.1.0 =
+* Add save messaging to admin view
+* Add <meta> tag output to describe post data for Filament Apps to read
+* Add end-point for Filament App to ping to get category, tag and public post_type information to help improve Filament App UI experience for WordPress sites
+* Add translation compatibility for messaging
+
 = 1.0.4 =
 * Update compatible-up-to version
 * Fix typos
