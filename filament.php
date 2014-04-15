@@ -3,7 +3,7 @@
 Plugin Name: Filament
 Plugin URI: http://filament.io/
 Description: Install & manage all your Web apps from a single place. Connect your website to Filament with this plugin, and never bug your developers again!
-Version: 1.1.0
+Version: 1.2.0
 Author: dtelepathy
 Author URI: http://www.dtelepathy.com/
 Contributors: kynatro, dtelepathy, dtlabs
@@ -30,7 +30,7 @@ class Filament {
     var $label = "Filament";
     var $slug = "filament";
     var $menu_hooks = array();
-    var $version = '1.1.0';
+    var $version = '1.2.0';
 
     /**
      * Initialize the plugin
@@ -128,7 +128,14 @@ class Filament {
      * Public site taxonomy structure URL for Filament App knowledge
      */
     public function ajax_taxonomy_structure() {
-        header( 'Content-type: application/json' );
+        $header = "application/json";
+        
+        if( isset( $_REQUEST['callback'] ) ) {
+            $callback = preg_replace( "/([^A-Za-z0-9_\$\.]+)/", "", $_REQUEST['callback'] );
+            $header =  "application/javascript";
+        }
+
+        header( 'Content-type: ' . $header );
 
         $structure = array(
           'post_types' => array(),
@@ -138,7 +145,11 @@ class Filament {
 
         $post_types = wp_cache_get( 'post_types', $this->slug );
         if( !$post_types ) {
-            $post_types = get_post_types( array( 'public' => true ) );
+            $post_types = array();
+            $post_type_slugs = get_post_types( array( 'public' => true ) );
+            
+            foreach( $post_type_slugs as $post_type_slug ) $post_types[] = get_post_type_object( $post_type_slug );
+
             wp_cache_set( 'post_types', $post_types, $this->slug, 3600 );
         }
         
@@ -154,11 +165,17 @@ class Filament {
             wp_cache_set( 'tags', $tags, $this->slug, 3600 );
         }
 
-        $structure['post_types'] = array_values( $post_types );
-        foreach( $categories as $category ) $structure['categories'][] = $category->slug;
-        foreach( $tags as $tag ) $structure['tags'][] = $tag->slug;
+        foreach( $post_types as $post_type ) $structure['post_types'][$post_type->name] = $post_type->label;
+        foreach( $categories as $category ) $structure['categories'][$category->slug] = $category->name;
+        foreach( $tags as $tag ) $structure['tags'][$tag->slug] = $tag->name;
         
-        exit( json_encode( $structure ) );
+        $data = json_encode( $structure );
+
+        if( isset( $callback ) && !empty( $callback ) ) {
+            $data = "$callback($data)";
+        }
+
+        exit( $data );
     }
 
     /**

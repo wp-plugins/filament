@@ -46,6 +46,10 @@ The plugin is simple to install:
 1. Go to the plugin management page and enable the plugin
 
 == Changelog ==
+= 1.2.0 =
+* Modify AJAX end-point to respond to JSONP requests with a _REQUEST['callback'] parameter
+* Restructure post_types structure in AJAX end-point response to respond with a key/value pair of name and label
+
 = 1.1.0 =
 * Add save messaging to admin view
 * Add <meta> tag output to describe post data for Filament Apps to read
