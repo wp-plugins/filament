@@ -49,6 +49,9 @@ class Filament {
         // Admin in-line styles
         add_action( 'admin_head', array( &$this, 'admin_head' ) );
 
+        // Enqueue admin JavaScripts for this plugin
+        add_action( 'admin_menu', array( &$this, 'wp_enqueue_admin_scripts' ), 1 );
+
         // Admin menu addition
         add_action( 'admin_menu', array( &$this, 'admin_menu' ) );
 
@@ -141,13 +144,13 @@ class Filament {
             $post_types = get_post_types( array( 'public' => true ) );
             wp_cache_set( 'post_types', $post_types, $this->slug, 3600 );
         }
-        
+
         $categories = wp_cache_get( 'categories', $this->slug );
         if( !$categories ) {
             $categories = get_terms( 'category' );
             wp_cache_set( 'categories', $categories, $this->slug, 3600 );
         }
-        
+
         $tags = wp_cache_get( 'tags', $this->slug );
         if( !$tags ) {
             $tags = get_terms( 'post_tag' );
@@ -157,7 +160,7 @@ class Filament {
         $structure['post_types'] = array_values( $post_types );
         foreach( $categories as $category ) $structure['categories'][] = $category->slug;
         foreach( $tags as $tag ) $structure['tags'][] = $tag->slug;
-        
+
         exit( json_encode( $structure ) );
     }
 
@@ -176,7 +179,7 @@ class Filament {
     }
 
     public function load_admin_page() {
-        wp_enqueue_style( "{$this->slug}-admin", filament_plugin_url( "/assets/admin.css" ), array(), $this->version, 'screen' );
+        wp_enqueue_style( "{$this->slug}-admin", filament_plugin_url( "/assets/css/admin.main.css" ), array(), $this->version, 'screen' );
     }
 
     /**
@@ -285,6 +288,10 @@ class Filament {
         include( "views/_meta.php" );
 
         echo html_entity_decode( get_option( $this->slug . '_single_drop', "" ), ENT_QUOTES, "UTF-8" );
+    }
+
+    function wp_enqueue_admin_scripts(){
+      wp_enqueue_script( "{$this->slug}-admin", filament_plugin_url( "/assets/js/admin.main.js" ), array( 'jquery' ), $this->version, true );
     }
 }
 
