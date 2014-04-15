@@ -1,0 +1,369 @@
+@import "compass/css3/box-sizing";
+@import "compass/css3/box-shadow";
+@import "compass/css3/border-radius";
+@import "compass/css3/transition";
+@import "compass/css3/transform";
+
+$filament-purple: #8a48bb;
+$link-color: #5b5b5b;
+
+@mixin gray-border-bottom {
+  border-bottom: solid 1px #c8c8c8;
+}
+
+
+#filament {
+  max-width: 770px;
+  padding-top: 42px;
+  padding-left: 33px;
+  padding-right: 20px;
+  @include box-sizing(border-box);
+  @media only screen and (max-width:480px) {
+    padding-left: 10px;
+  }
+
+  .has-tooltip {
+    position: relative;
+    display: inline-block;
+    &:hover,
+    &:active {
+      .filament-tooltip {
+        display: block;
+      }
+    }
+  }
+  .filament-tooltip {
+    $arrow-size: 14px;
+    $background-color: white;
+    $stroke-size: 1;
+    $stroke-color: #cecece;
+
+    display: none;
+    background: $background-color;
+    margin-top: 40px;
+    position: absolute;
+    z-index: 100;
+    padding: 5px;
+    top: 0;
+    left: 50%;
+    border-radius: 3px;
+    border: solid $stroke-size+px $stroke-color;
+    @include box-sizing(border-box);
+    @include box-shadow(0px 1px 2px rgba(0,0,0,.22));
+    .inner {
+      position: relative;
+      z-index: 20;
+      @include box-sizing(border-box);
+      img {
+        float: left;
+      }
+    }
+    &:after,
+    &:before {
+      left: 50%;
+      top: 0;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      z-index: 10;
+      pointer-events: none;
+    }
+    &:after {
+      border-color: transparent;
+      border-bottom-color: $background-color;
+      border-width:  $arrow-size ($arrow-size * 0.8);
+      margin-top: $arrow-size * -2;
+      margin-left: $arrow-size * -1;
+    }
+    &:before {
+      border-color: transparent;
+      border-bottom-color: $stroke-color;
+      border-width:  ($arrow-size + $stroke-size) (($arrow-size + $stroke-size) * 0.8);
+      margin-top: ($arrow-size + $stroke-size) * -2;
+      margin-left: ($arrow-size + $stroke-size) * -1;
+    }
+  }
+
+  .updated {
+    margin-bottom: 2em;
+  }
+
+  // Global Purple Button Style
+  .filament-button {
+    cursor: pointer;
+    text-align: center;
+    min-width: 8em;
+    display: inline-block;
+    padding: .75em 1.75em;
+    margin: 0;
+    background: $filament-purple;
+    color: white;
+    text-transform: none;
+    border: none;
+    outline: none;
+    border-color: transparent;
+    @include box-shadow(none);
+    @include border-radius(4px);
+    &:hover {
+      background: lighten($filament-purple, 5%);
+    }
+    &:active {
+      background: darken($filament-purple, 5%);
+    }
+  }
+
+  #header {
+    $padding-bottom: 12px;
+    font-size: 13px;
+    color: #898989;
+    padding-bottom: $padding-bottom;
+    @include gray-border-bottom;
+    position: relative;
+    margin-bottom: 25px;
+    .register {
+      position: absolute;
+      bottom: $padding-bottom;
+      right: 0;
+      @media only screen and (max-width:480px) {
+        position: relative;
+        display: block;
+        bottom: auto;
+        right: auto;
+      }
+      a {
+        font-weight: bold;
+        color: $link-color;
+        padding-left: .75em;
+      }
+    }
+  }
+
+  #code-snippet-wrapper {
+    background: #223b4a;
+    color: white;
+    padding: 11px 15px;
+    @include border-radius(4px);
+    @include box-sizing(border-box);
+
+    p {
+      font-size: 14px;
+      font-weight: bold;
+      margin: .3em 0 1.2em;
+      display: inline-block;
+      position: relative;
+      strong {
+        color: #ffbe00;
+      }
+      &:after {
+        $size: 26px;
+        content: '';
+        position: absolute;
+        bottom: $size * -0.3;
+        right: $size * -1.5;
+        width: $size;
+        height: $size;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAA2ElEQVRIx72W0QnEIBBEbcEWrgVbsIW0YAu2cC3YQloQrgJbuBZswXNBYTCG+4hjYAko5DGZWVeldj7lo161Yi1fSzNBAiitMhXYPp4B+K1lWTA9Ab6Z6sSzc1BnmN4doE7ejp3IBOo8EybeBYAFdr+FLcomMLcLlqlpbLAekMQGaYg+3a8D/DLDnll6ZsIJEm/W/cqG7qrsZM0wUhiHsZOe+hKxh0YFkEi/qmET/K7YVcG+fhprnMilGX9ZW33PKDflVveSbYMRIZl9wcm7xoj456hXtn/PDwafW4cUCi1jAAAAAElFTkSuQmCC');
+
+      }
+      @media only screen and (max-width:480px) {
+        font-size: 12px;
+        text-align: center;
+      }
+    }
+
+    textarea {
+      @include box-sizing(border-box);
+      white-space: nowrap;
+      // resize: vertical;
+      resize: none;
+      width: 100%;
+      height: 46px;
+      padding: 1em;
+      margin: 0 0 10px;
+      line-height: 1em;
+    }
+
+    .submit {
+      text-align: right;
+      margin: 0;
+      padding: 0;
+      @media only screen and (max-width:480px) {
+        input {
+          width: 100%;
+        }
+      }
+    }
+  }
+  .snippet-help {
+    text-align: right;
+    margin-top: .75em;
+    a {
+      color: $link-color;
+    }
+  }
+  #additional-info {
+    margin-top: 3em;
+    .expander {
+      cursor: pointer;
+    }
+    h3.expander {
+      position: relative;
+      color: $link-color;
+      font-size: 16px;
+      font-weight: bold;
+      padding-bottom: 0.45em;
+      padding-left: 15px;
+      margin: 0 0 2em;
+      @include gray-border-bottom;
+      &:after {
+        $size: 6px;
+        left: 0;
+        top: 50%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-color: transparent;
+        border-left-color: #959595;
+        border-width:  $size ($size * 1.7);
+        margin-top: $size * -1 - ($size * 0.4);
+        @include transition(transform 125ms, transform-origin 125ms);
+      }
+      &.opened {
+        &:after {
+          @include transform(rotate(90deg));
+          @include transform-origin(25%, 50%)
+        }
+      }
+    }
+    .expandable {
+      margin-bottom: 4em;
+    }
+    #how-to-connect {
+      $number-padding: 22px;
+      counter-reset: how-to-counter;
+      &:after {
+        content: '';
+        display: block;
+        clear: both;
+      }
+      .wrapper {
+        &:after {
+          content: '';
+          display: block;
+          clear: both;
+        }
+        background: #e3e3e3;
+        padding: 24px 18px;
+        overflow: visible;
+        @include box-sizing(border-box);
+        .column {
+          &:before {
+            content: counter(how-to-counter);
+            counter-increment: how-to-counter;
+            display: block;
+            position: absolute;
+            border: solid 2px #c9c9c9;
+            left: 0;
+            font-size: 13px;
+            font-weight: bold;
+            color: #878787;
+            width: $number-padding;
+            height: $number-padding;
+            line-height: $number-padding;
+            text-align: center;
+            border-radius: 50%;
+          }
+          padding-left: $number-padding * 1.48;
+          padding-right: 20px;
+          position: relative;
+          float: left;
+          width: 38%;
+          @include box-sizing(border-box);
+          &:nth-child(3) {
+            width: 24%;
+            padding-right: 0;
+          }
+          h4 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: bold;
+            color: #8f8f8f;
+            line-height: $number-padding;
+          }
+          p {
+            margin: 0 0 1em;
+            color: #8f8f8f;
+          }
+          a {
+            color: $link-color;
+          }
+          @media only screen and (max-width:480px) {
+            width: 100%;
+            &:nth-child(3) {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+    #whats-filament-about {
+      text-align: center;
+      img {
+        max-width: 100%;
+      }
+    }
+    .apps {
+      > div {
+        display: inline-block;
+        width: 22%;
+        margin: 20px 30px 0;
+        position: relative;
+        .image-wrapper {
+          position: relative;
+          overflow: hidden;
+          margin-bottom: 5px;
+          img {
+            float: left;
+          }
+        }
+        strong {
+          color: white;
+          font-weight: normal;
+          position: absolute;
+          bottom: 18px;
+          right: 0;
+          left: 0;
+        }
+        a {
+          background: black;
+          color: white;
+          text-align: center;
+          display: inline-block;
+          padding: .45em 0;
+          width: 100%;
+          line-height: 1em;
+          text-decoration: none;
+          font-weight: bold;
+          text-transform: uppercase;
+          @include border-radius(3px);
+          &:hover {
+            background: lighten(black, 20%);
+          }
+          @media only screen and (max-width:480px) {
+            padding: 1em 0;
+          }
+        }
+        @media only screen and (max-width:480px) {
+          width: 200px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+    }
+  }
+}

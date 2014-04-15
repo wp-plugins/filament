@@ -3,7 +3,7 @@
 Plugin Name: Filament
 Plugin URI: http://filament.io/
 Description: Install & manage all your Web apps from a single place. Connect your website to Filament with this plugin, and never bug your developers again!
-Version: 1.1.0
+Version: 1.2.0
 Author: dtelepathy
 Author URI: http://www.dtelepathy.com/
 Contributors: kynatro, dtelepathy, dtlabs
@@ -30,7 +30,7 @@ class Filament {
     var $label = "Filament";
     var $slug = "filament";
     var $menu_hooks = array();
-    var $version = '1.1.0';
+    var $version = '1.2.0';
 
     /**
      * Initialize the plugin
@@ -48,6 +48,9 @@ class Filament {
 
         // Admin in-line styles
         add_action( 'admin_head', array( &$this, 'admin_head' ) );
+
+        // Enqueue admin JavaScripts for this plugin
+        add_action( 'admin_menu', array( &$this, 'wp_enqueue_admin_scripts' ), 1 );
 
         // Admin menu addition
         add_action( 'admin_menu', array( &$this, 'admin_menu' ) );
@@ -93,7 +96,6 @@ class Filament {
         include( dirname( __FILE__ ) . '/views/admin/_styles.php' );
     }
 
-
     /**
      * Define the admin menu options for this plugin
      *
@@ -128,7 +130,14 @@ class Filament {
      * Public site taxonomy structure URL for Filament App knowledge
      */
     public function ajax_taxonomy_structure() {
-        header( 'Content-type: application/json' );
+        $header = "application/json";
+
+        if( isset( $_REQUEST['callback'] ) ) {
+          $callback = preg_replace( "/([^A-Za-z0-9_\$\.]+)/", "", $_REQUEST['callback'] );
+          $header =  "application/javascript";
+        }
+
+        header( 'Content-type: ' . $header );
 
         $structure = array(
           'post_types' => array(),
@@ -138,27 +147,37 @@ class Filament {
 
         $post_types = wp_cache_get( 'post_types', $this->slug );
         if( !$post_types ) {
-            $post_types = get_post_types( array( 'public' => true ) );
+            $post_types = array();
+            $post_type_slugs = get_post_types( array( 'public' => true ) );
+
+            foreach( $post_type_slugs as $post_type_slug ) $post_types[] = get_post_type_object( $post_type_slug );
+
             wp_cache_set( 'post_types', $post_types, $this->slug, 3600 );
         }
-        
+
         $categories = wp_cache_get( 'categories', $this->slug );
         if( !$categories ) {
             $categories = get_terms( 'category' );
             wp_cache_set( 'categories', $categories, $this->slug, 3600 );
         }
-        
+
         $tags = wp_cache_get( 'tags', $this->slug );
         if( !$tags ) {
             $tags = get_terms( 'post_tag' );
             wp_cache_set( 'tags', $tags, $this->slug, 3600 );
         }
 
-        $structure['post_types'] = array_values( $post_types );
-        foreach( $categories as $category ) $structure['categories'][] = $category->slug;
-        foreach( $tags as $tag ) $structure['tags'][] = $tag->slug;
-        
-        exit( json_encode( $structure ) );
+        foreach( $post_types as $post_type ) $structure['post_types'][$post_type->name] = $post_type->label;
+        foreach( $categories as $category ) $structure['categories'][$category->slug] = $category->name;
+        foreach( $tags as $tag ) $structure['tags'][$tag->slug] = $tag->name;
+
+        $data = json_encode( $structure );
+
+        if( isset( $callback ) && !empty( $callback ) ) {
+            $data = "$callback($data)";
+        }
+
+        exit( $data );
     }
 
     /**
@@ -176,7 +195,7 @@ class Filament {
     }
 
     public function load_admin_page() {
-        wp_enqueue_style( "{$this->slug}-admin", filament_plugin_url( "/assets/admin.css" ), array(), $this->version, 'screen' );
+        wp_enqueue_style( "{$this->slug}-admin", filament_plugin_url( "/assets/css/admin.main.css" ), array(), $this->version, 'screen' );
     }
 
     /**
@@ -285,6 +304,10 @@ class Filament {
         include( "views/_meta.php" );
 
         echo html_entity_decode( get_option( $this->slug . '_single_drop', "" ), ENT_QUOTES, "UTF-8" );
+    }
+
+    function wp_enqueue_admin_scripts(){
+      wp_enqueue_script( "{$this->slug}-admin", filament_plugin_url( "/assets/js/admin.main.js" ), array( 'jquery' ), $this->version, true );
     }
 }
 
