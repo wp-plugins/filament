@@ -3,7 +3,7 @@
 Plugin Name: Filament
 Plugin URI: http://filament.io/
 Description: Install & manage all your Web apps from a single place. Connect your website to Filament with this plugin, and never bug your developers again!
-Version: 1.2.0
+Version: 1.2.5
 Author: dtelepathy
 Author URI: http://www.dtelepathy.com/
 Contributors: kynatro, dtelepathy, dtlabs
@@ -30,7 +30,7 @@ class Filament {
     var $label = "Filament";
     var $slug = "filament";
     var $menu_hooks = array();
-    var $version = '1.2.0';
+    var $version = '1.2.5';
 
     /**
      * Initialize the plugin
@@ -81,10 +81,29 @@ class Filament {
      */
     private function _submit_admin_options() {
         $code_snippet = wp_check_invalid_utf8( htmlentities( stripslashes( $_REQUEST['single_drop'] ), ENT_QUOTES, "UTF-8" ) );
+        $caching = "";
 
         update_option( $this->slug . '_single_drop', $code_snippet );
 
-        wp_redirect( admin_url( 'admin.php' ) . '?page=' . $this->slug . '&message=submit' ); exit;
+        // Other cache sources
+        if( defined( 'WP_CACHE' ) && ( WP_CACHE == true ) ) $caching = "other";
+        // Check for CloudFlare
+        if( defined( 'CLOUDFLARE_VERSION' ) ) $caching = "cloudflare";
+        // Check for W3 Total Cache
+        if( defined( 'W3TC' ) ) {
+          if( function_exists( 'w3tc_pgcache_flush_url' ) ) {
+            w3tc_pgcache_flush_url( "/" );
+            $caching = "";
+          } else {
+            $caching = "w3-total-cache";
+          }
+        }
+        // Check for WP Super Cache
+        if( function_exists( 'wpsupercache_site_admin' ) ) $caching = "wp-super-cache";
+        // Check for Quick Cache
+        if( class_exists('\\quick_cache\\plugin') ) $caching = "quick-cache";
+
+        wp_redirect( admin_url( 'admin.php' ) . '?page=' . $this->slug . '&message=submit&caching=' . $caching ); exit;
     }
 
     /**
@@ -120,8 +139,12 @@ class Filament {
     public function admin_options() {
         $data = array();
         $action = $this->slug . '_admin_options';
+        $code_snippet = get_option( $this->slug . '_single_drop', "" );
+        $data['single_drop'] = html_entity_decode( $code_snippet, ENT_QUOTES, "UTF-8" );
 
-        $data['single_drop'] = html_entity_decode( get_option( $this->slug . '_single_drop', "" ), ENT_QUOTES, "UTF-8" );
+        $step = 1;
+        if( !empty( $code_snippet ) ) $step = 3;
+        if( !empty( $code_snippet ) && isset( $_GET['message'] ) ) $step = 2;
 
         include( dirname( __FILE__ ) . '/views/admin/admin_options.php' );
     }

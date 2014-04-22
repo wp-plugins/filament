@@ -4,8 +4,23 @@
 @import "compass/css3/transition";
 @import "compass/css3/transform";
 
+
+@font-face {
+    font-family: 'entyporegular';
+    src: url('../fonts/entypo-webfont.eot');
+    src: url('../fonts/entypo-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/entypo-webfont.woff') format('woff'),
+         url('../fonts/entypo-webfont.ttf') format('truetype'),
+         url('../fonts/entypo-webfont.svg#entyporegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 $filament-purple: #8a48bb;
-$link-color: #5b5b5b;
+$link-color: #2a2a2a;
+$dark-gray: #2a2a2a;
+$gray: #5b5b5b;
 
 @mixin gray-border-bottom {
   border-bottom: solid 1px #c8c8c8;
@@ -86,9 +101,37 @@ $link-color: #5b5b5b;
     }
   }
 
-  .updated {
-    margin-bottom: 2em;
+  .updated, .error {
+    margin: 0 0 .5em 0;   
+    border-left: none;
+    @include border-radius(4px);
+    p {
+      color: #fff;
+      font-size: 14px;
+      padding-left: 1em;
+      a {        
+        text-decoration: underline;
+      }
+    }
   }
+  .updated{
+    background: #42c08c url(../images/bolt-white.png) 6px 12px no-repeat;
+    a {
+      color: #226348;
+      font-size: 13px;
+      line-height: 1.8em;
+      &.right{ 
+        float: right; 
+      }
+    }
+  }
+  .error {
+    background: #d2213a url(../images/bolt-white.png) 6px 12px  no-repeat;
+    a {
+      color: #73121f;
+    }
+  }
+
 
   // Global Purple Button Style
   .filament-button {
@@ -96,7 +139,7 @@ $link-color: #5b5b5b;
     text-align: center;
     min-width: 8em;
     display: inline-block;
-    padding: .75em 1.75em;
+    padding: .5em .75em;
     margin: 0;
     background: $filament-purple;
     color: white;
@@ -118,7 +161,7 @@ $link-color: #5b5b5b;
     $padding-bottom: 12px;
     font-size: 13px;
     color: #898989;
-    padding-bottom: $padding-bottom;
+    padding-bottom: 2px;
     @include gray-border-bottom;
     position: relative;
     margin-bottom: 25px;
@@ -143,11 +186,11 @@ $link-color: #5b5b5b;
   #code-snippet-wrapper {
     background: #223b4a;
     color: white;
-    padding: 11px 15px;
+    padding: 11px 15px 20px 15px;
     @include border-radius(4px);
     @include box-sizing(border-box);
 
-    p {
+    > p {
       font-size: 14px;
       font-weight: bold;
       margin: .3em 0 1.2em;
@@ -175,64 +218,81 @@ $link-color: #5b5b5b;
 
     textarea {
       @include box-sizing(border-box);
-      white-space: nowrap;
+      // white-space: nowrap;
       // resize: vertical;
       resize: none;
       width: 100%;
-      height: 46px;
+      height: 126px;
       padding: 1em;
       margin: 0 0 10px;
       line-height: 1em;
     }
-
+     .snippet-help {
+        text-align: right;
+        margin-top: .75em;
+        font-size: 12px;
+        &:after{
+          background-image: none;
+        }
+        a {
+          color: #fff;
+          text-decoration: none;
+          font-weight: normal;
+          &:before{
+            background: url(../images/question.gif) 0 0 no-repeat;
+            content: ' ';
+            height: 17px;
+            width: 25px;
+            float: left;
+          }
+        }
+      }
     .submit {
       text-align: right;
-      margin: 0;
+      margin: -4em 0 0 0;
       padding: 0;
       @media only screen and (max-width:480px) {
         input {
+          margin: 2em 0 0 0;
           width: 100%;
         }
       }
     }
   }
-  .snippet-help {
-    text-align: right;
-    margin-top: .75em;
-    a {
-      color: $link-color;
-    }
-  }
+ 
   #additional-info {
-    margin-top: 3em;
+    margin-top: 4em;
     .expander {
       cursor: pointer;
     }
-    h3.expander {
+    h3{
       position: relative;
-      color: $link-color;
+      color: $dark-gray;
       font-size: 16px;
-      font-weight: bold;
-      padding-bottom: 0.45em;
-      padding-left: 15px;
-      margin: 0 0 2em;
-      @include gray-border-bottom;
-      &:after {
-        $size: 6px;
-        left: 0;
-        top: 50%;
-        border: solid transparent;
-        content: " ";
-        height: 0;
-        width: 0;
-        position: absolute;
-        pointer-events: none;
-        border-color: transparent;
-        border-left-color: #959595;
-        border-width:  $size ($size * 1.7);
-        margin-top: $size * -1 - ($size * 0.4);
-        @include transition(transform 125ms, transform-origin 125ms);
-      }
+      font-weight: bold; 
+      margin: 0;
+      &.expander{
+        @include gray-border-bottom;
+        padding-left: 15px;        
+        padding-bottom: 0.45em;  
+        color: $gray;
+        &:after {
+          $size: 6px;
+          left: 0;
+          top: 50%;
+          border: solid transparent;
+          content: " ";
+          height: 0;
+          width: 0;
+          position: absolute;
+          pointer-events: none;
+          border-color: transparent;
+          border-left-color: #959595;
+          border-width:  $size ($size * 1.7);
+          margin-top: $size * -1 - ($size * 0.4);
+          @include transition(transform 125ms, transform-origin 125ms);
+        }
+      
       &.opened {
         &:after {
           @include transform(rotate(90deg));
@@ -240,11 +300,13 @@ $link-color: #5b5b5b;
         }
       }
     }
+    }
     .expandable {
       margin-bottom: 4em;
     }
     #how-to-connect {
       $number-padding: 22px;
+      margin: 1em 0 3em 0;
       counter-reset: how-to-counter;
       &:after {
         content: '';
@@ -257,18 +319,16 @@ $link-color: #5b5b5b;
           display: block;
           clear: both;
         }
-        background: #e3e3e3;
-        padding: 24px 18px;
         overflow: visible;
         @include box-sizing(border-box);
-        .column {
+        .column {                 
           &:before {
             content: counter(how-to-counter);
             counter-increment: how-to-counter;
             display: block;
             position: absolute;
             border: solid 2px #c9c9c9;
-            left: 0;
+            left: 1.5em;
             font-size: 13px;
             font-weight: bold;
             color: #878787;
@@ -278,32 +338,62 @@ $link-color: #5b5b5b;
             text-align: center;
             border-radius: 50%;
           }
-          padding-left: $number-padding * 1.48;
-          padding-right: 20px;
+          padding: 1em 1.5em;
+          background: #e3e3e3;
           position: relative;
           float: left;
-          width: 38%;
-          @include box-sizing(border-box);
-          &:nth-child(3) {
-            width: 24%;
-            padding-right: 0;
-          }
+          height: 16em;
+          width: 33%;
+          @include box-sizing(border-box);  
+          border-left: solid 1px #d4d4d4;
+          &:nth-child(1) {border-left: none}      
           h4 {
-            margin: 0;
+            margin: 2em 0 .25em 0;
             font-size: 16px;
             font-weight: bold;
             color: #8f8f8f;
             line-height: $number-padding;
           }
           p {
-            margin: 0 0 1em;
+            margin: 0 0 1em 0;
+            font-size: 12px;
             color: #8f8f8f;
+            &.active{display: none;}
           }
           a {
             color: $link-color;
+            font-weight: bold;
+            &.filament-button{
+              display: none;
+            }
           }
-          @media only screen and (max-width:480px) {
+          &.active{
+            background: #d4d4d4;
+            &:before {             
+              border: solid 2px $dark-gray;
+              background-color: $dark-gray;
+              color: #fff;
+            }
+            h4, p, a, p a {
+              color: $dark-gray;
+            }
+            p.inactive{display: none;}
+            p.active{display: block;}
+            a.filament-button{
+              min-width: 5em;
+              display: block;
+              color: #fff;
+              text-decoration: none;
+            }
+          }
+          @media only screen and (max-width:767px) {  
+            height: 20em;
+          }
+          @media only screen and (max-width:480px) {  
             width: 100%;
+            height: 13em;
+            border-left: none;
+            border-bottom: solid 1px #d4d4d4;
             &:nth-child(3) {
               width: 100%;
             }
@@ -312,12 +402,30 @@ $link-color: #5b5b5b;
       }
     }
     #whats-filament-about {
+      margin: 3em 0 0; 
       text-align: center;
       img {
         max-width: 100%;
       }
     }
     .apps {
+      
+      p {
+        margin: 2em 0;
+        color: $gray;
+        font-size: 15px;
+        a{
+          color: $link-color;
+        }
+      }
+      h2 a{
+        color: $gray;
+        font-size: 1.3em;
+        font-weight: bold;      
+        text-decoration: none;
+        border-bottom: 1px solid $gray;
+      }
+
       > div {
         display: inline-block;
         width: 22%;
@@ -344,7 +452,7 @@ $link-color: #5b5b5b;
           color: white;
           text-align: center;
           display: inline-block;
-          padding: .45em 0;
+          padding: .65em 0;
           width: 100%;
           line-height: 1em;
           text-decoration: none;

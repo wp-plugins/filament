@@ -1,4 +1,12 @@
-/* line 15, ../sass/admin.scss */
+@font-face {
+  font-family: 'entyporegular';
+  src: url("../fonts/entypo-webfont.eot");
+  src: url("../fonts/entypo-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/entypo-webfont.woff") format("woff"), url("../fonts/entypo-webfont.ttf") format("truetype"), url("../fonts/entypo-webfont.svg#entyporegular") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* line 30, ../sass/admin.scss */
 #filament {
   max-width: 770px;
   padding-top: 42px;
@@ -9,21 +17,21 @@
   box-sizing: border-box;
 }
 @media only screen and (max-width: 480px) {
-  /* line 15, ../sass/admin.scss */
+  /* line 30, ../sass/admin.scss */
   #filament {
     padding-left: 10px;
   }
 }
-/* line 25, ../sass/admin.scss */
+/* line 40, ../sass/admin.scss */
 #filament .has-tooltip {
   position: relative;
   display: inline-block;
 }
-/* line 30, ../sass/admin.scss */
+/* line 45, ../sass/admin.scss */
 #filament .has-tooltip:hover .filament-tooltip, #filament .has-tooltip:active .filament-tooltip {
   display: block;
 }
-/* line 35, ../sass/admin.scss */
+/* line 50, ../sass/admin.scss */
 #filament .filament-tooltip {
   display: none;
   background: white;
@@ -42,7 +50,7 @@
   -moz-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.22);
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.22);
 }
-/* line 53, ../sass/admin.scss */
+/* line 68, ../sass/admin.scss */
 #filament .filament-tooltip .inner {
   position: relative;
   z-index: 20;
@@ -50,11 +58,11 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-/* line 57, ../sass/admin.scss */
+/* line 72, ../sass/admin.scss */
 #filament .filament-tooltip .inner img {
   float: left;
 }
-/* line 62, ../sass/admin.scss */
+/* line 77, ../sass/admin.scss */
 #filament .filament-tooltip:after, #filament .filament-tooltip:before {
   left: 50%;
   top: 0;
@@ -66,7 +74,7 @@
   z-index: 10;
   pointer-events: none;
 }
-/* line 73, ../sass/admin.scss */
+/* line 88, ../sass/admin.scss */
 #filament .filament-tooltip:after {
   border-color: transparent;
   border-bottom-color: white;
@@ -74,7 +82,7 @@
   margin-top: -28px;
   margin-left: -14px;
 }
-/* line 80, ../sass/admin.scss */
+/* line 95, ../sass/admin.scss */
 #filament .filament-tooltip:before {
   border-color: transparent;
   border-bottom-color: #cecece;
@@ -82,17 +90,55 @@
   margin-top: -30px;
   margin-left: -15px;
 }
-/* line 89, ../sass/admin.scss */
-#filament .updated {
-  margin-bottom: 2em;
+/* line 104, ../sass/admin.scss */
+#filament .updated, #filament .error {
+  margin: 0 0 .5em 0;
+  border-left: none;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
 }
-/* line 94, ../sass/admin.scss */
+/* line 108, ../sass/admin.scss */
+#filament .updated p, #filament .error p {
+  color: #fff;
+  font-size: 14px;
+  padding-left: 1em;
+}
+/* line 112, ../sass/admin.scss */
+#filament .updated p a, #filament .error p a {
+  text-decoration: underline;
+}
+/* line 117, ../sass/admin.scss */
+#filament .updated {
+  background: #42c08c url(../images/bolt-white.png) 6px 12px no-repeat;
+}
+/* line 119, ../sass/admin.scss */
+#filament .updated a {
+  color: #226348;
+  font-size: 13px;
+  line-height: 1.8em;
+}
+/* line 123, ../sass/admin.scss */
+#filament .updated a.right {
+  float: right;
+}
+/* line 128, ../sass/admin.scss */
+#filament .error {
+  background: #d2213a url(../images/bolt-white.png) 6px 12px no-repeat;
+}
+/* line 130, ../sass/admin.scss */
+#filament .error a {
+  color: #73121f;
+}
+/* line 137, ../sass/admin.scss */
 #filament .filament-button {
   cursor: pointer;
   text-align: center;
   min-width: 8em;
   display: inline-block;
-  padding: .75em 1.75em;
+  padding: .5em .75em;
   margin: 0;
   background: #8a48bb;
   color: white;
@@ -109,31 +155,31 @@
   -o-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 109, ../sass/admin.scss */
+/* line 152, ../sass/admin.scss */
 #filament .filament-button:hover {
   background: #965bc2;
 }
-/* line 112, ../sass/admin.scss */
+/* line 155, ../sass/admin.scss */
 #filament .filament-button:active {
   background: #7d3faa;
 }
-/* line 117, ../sass/admin.scss */
+/* line 160, ../sass/admin.scss */
 #filament #header {
   font-size: 13px;
   color: #898989;
-  padding-bottom: 12px;
+  padding-bottom: 2px;
   border-bottom: solid 1px #c8c8c8;
   position: relative;
   margin-bottom: 25px;
 }
-/* line 125, ../sass/admin.scss */
+/* line 168, ../sass/admin.scss */
 #filament #header .register {
   position: absolute;
   bottom: 12px;
   right: 0;
 }
 @media only screen and (max-width: 480px) {
-  /* line 125, ../sass/admin.scss */
+  /* line 168, ../sass/admin.scss */
   #filament #header .register {
     position: relative;
     display: block;
@@ -141,17 +187,17 @@
     right: auto;
   }
 }
-/* line 135, ../sass/admin.scss */
+/* line 178, ../sass/admin.scss */
 #filament #header .register a {
   font-weight: bold;
-  color: #5b5b5b;
+  color: #2a2a2a;
   padding-left: .75em;
 }
-/* line 143, ../sass/admin.scss */
+/* line 186, ../sass/admin.scss */
 #filament #code-snippet-wrapper {
   background: #223b4a;
   color: white;
-  padding: 11px 15px;
+  padding: 11px 15px 20px 15px;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
@@ -161,20 +207,20 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-/* line 150, ../sass/admin.scss */
-#filament #code-snippet-wrapper p {
+/* line 193, ../sass/admin.scss */
+#filament #code-snippet-wrapper > p {
   font-size: 14px;
   font-weight: bold;
   margin: .3em 0 1.2em;
   display: inline-block;
   position: relative;
 }
-/* line 156, ../sass/admin.scss */
-#filament #code-snippet-wrapper p strong {
+/* line 199, ../sass/admin.scss */
+#filament #code-snippet-wrapper > p strong {
   color: #ffbe00;
 }
-/* line 159, ../sass/admin.scss */
-#filament #code-snippet-wrapper p:after {
+/* line 202, ../sass/admin.scss */
+#filament #code-snippet-wrapper > p:after {
   content: '';
   position: absolute;
   bottom: -7.8px;
@@ -184,66 +230,85 @@
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAA2ElEQVRIx72W0QnEIBBEbcEWrgVbsIW0YAu2cC3YQloQrgJbuBZswXNBYTCG+4hjYAko5DGZWVeldj7lo161Yi1fSzNBAiitMhXYPp4B+K1lWTA9Ab6Z6sSzc1BnmN4doE7ejp3IBOo8EybeBYAFdr+FLcomMLcLlqlpbLAekMQGaYg+3a8D/DLDnll6ZsIJEm/W/cqG7qrsZM0wUhiHsZOe+hKxh0YFkEi/qmET/K7YVcG+fhprnMilGX9ZW33PKDflVveSbYMRIZl9wcm7xoj456hXtn/PDwafW4cUCi1jAAAAAElFTkSuQmCC");
 }
 @media only screen and (max-width: 480px) {
-  /* line 150, ../sass/admin.scss */
-  #filament #code-snippet-wrapper p {
+  /* line 193, ../sass/admin.scss */
+  #filament #code-snippet-wrapper > p {
     font-size: 12px;
     text-align: center;
   }
 }
-/* line 176, ../sass/admin.scss */
+/* line 219, ../sass/admin.scss */
 #filament #code-snippet-wrapper textarea {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  white-space: nowrap;
   resize: none;
   width: 100%;
-  height: 46px;
+  height: 126px;
   padding: 1em;
   margin: 0 0 10px;
   line-height: 1em;
 }
-/* line 188, ../sass/admin.scss */
+/* line 230, ../sass/admin.scss */
+#filament #code-snippet-wrapper .snippet-help {
+  text-align: right;
+  margin-top: .75em;
+  font-size: 12px;
+}
+/* line 234, ../sass/admin.scss */
+#filament #code-snippet-wrapper .snippet-help:after {
+  background-image: none;
+}
+/* line 237, ../sass/admin.scss */
+#filament #code-snippet-wrapper .snippet-help a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: normal;
+}
+/* line 241, ../sass/admin.scss */
+#filament #code-snippet-wrapper .snippet-help a:before {
+  background: url(../images/question.gif) 0 0 no-repeat;
+  content: ' ';
+  height: 17px;
+  width: 25px;
+  float: left;
+}
+/* line 250, ../sass/admin.scss */
 #filament #code-snippet-wrapper .submit {
   text-align: right;
-  margin: 0;
+  margin: -4em 0 0 0;
   padding: 0;
 }
 @media only screen and (max-width: 480px) {
-  /* line 193, ../sass/admin.scss */
+  /* line 255, ../sass/admin.scss */
   #filament #code-snippet-wrapper .submit input {
+    margin: 2em 0 0 0;
     width: 100%;
   }
 }
-/* line 199, ../sass/admin.scss */
-#filament .snippet-help {
-  text-align: right;
-  margin-top: .75em;
-}
-/* line 202, ../sass/admin.scss */
-#filament .snippet-help a {
-  color: #5b5b5b;
-}
-/* line 206, ../sass/admin.scss */
+/* line 263, ../sass/admin.scss */
 #filament #additional-info {
-  margin-top: 3em;
+  margin-top: 4em;
 }
-/* line 208, ../sass/admin.scss */
+/* line 265, ../sass/admin.scss */
 #filament #additional-info .expander {
   cursor: pointer;
 }
-/* line 211, ../sass/admin.scss */
-#filament #additional-info h3.expander {
+/* line 268, ../sass/admin.scss */
+#filament #additional-info h3 {
   position: relative;
-  color: #5b5b5b;
+  color: #2a2a2a;
   font-size: 16px;
   font-weight: bold;
-  padding-bottom: 0.45em;
-  padding-left: 15px;
-  margin: 0 0 2em;
-  border-bottom: solid 1px #c8c8c8;
+  margin: 0;
 }
-/* line 220, ../sass/admin.scss */
+/* line 274, ../sass/admin.scss */
+#filament #additional-info h3.expander {
+  border-bottom: solid 1px #c8c8c8;
+  padding-left: 15px;
+  padding-bottom: 0.45em;
+  color: #5b5b5b;
+}
+/* line 279, ../sass/admin.scss */
 #filament #additional-info h3.expander:after {
   left: 0;
   top: 50%;
@@ -262,7 +327,7 @@
   -o-transition: -o-transform 125ms, -o-transform-origin 125ms;
   transition: transform 125ms, transform-origin 125ms;
 }
-/* line 237, ../sass/admin.scss */
+/* line 297, ../sass/admin.scss */
 #filament #additional-info h3.expander.opened:after {
   -webkit-transform: rotate(90deg);
   -moz-transform: rotate(90deg);
@@ -275,54 +340,55 @@
   -o-transform-origin: 25% 50%;
   transform-origin: 25% 50%;
 }
-/* line 243, ../sass/admin.scss */
+/* line 304, ../sass/admin.scss */
 #filament #additional-info .expandable {
   margin-bottom: 4em;
 }
-/* line 246, ../sass/admin.scss */
+/* line 307, ../sass/admin.scss */
 #filament #additional-info #how-to-connect {
+  margin: 1em 0 3em 0;
   counter-reset: how-to-counter;
 }
-/* line 249, ../sass/admin.scss */
+/* line 311, ../sass/admin.scss */
 #filament #additional-info #how-to-connect:after {
   content: '';
   display: block;
   clear: both;
 }
-/* line 254, ../sass/admin.scss */
+/* line 316, ../sass/admin.scss */
 #filament #additional-info #how-to-connect .wrapper {
-  background: #e3e3e3;
-  padding: 24px 18px;
   overflow: visible;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-/* line 255, ../sass/admin.scss */
+/* line 317, ../sass/admin.scss */
 #filament #additional-info #how-to-connect .wrapper:after {
   content: '';
   display: block;
   clear: both;
 }
-/* line 264, ../sass/admin.scss */
+/* line 324, ../sass/admin.scss */
 #filament #additional-info #how-to-connect .wrapper .column {
-  padding-left: 32.56px;
-  padding-right: 20px;
+  padding: 1em 1.5em;
+  background: #e3e3e3;
   position: relative;
   float: left;
-  width: 38%;
+  height: 16em;
+  width: 33%;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  border-left: solid 1px #d4d4d4;
 }
-/* line 265, ../sass/admin.scss */
+/* line 325, ../sass/admin.scss */
 #filament #additional-info #how-to-connect .wrapper .column:before {
   content: counter(how-to-counter);
   counter-increment: how-to-counter;
   display: block;
   position: absolute;
   border: solid 2px #c9c9c9;
-  left: 0;
+  left: 1.5em;
   font-size: 13px;
   font-weight: bold;
   color: #878787;
@@ -332,64 +398,130 @@
   text-align: center;
   border-radius: 50%;
 }
-/* line 287, ../sass/admin.scss */
-#filament #additional-info #how-to-connect .wrapper .column:nth-child(3) {
-  width: 24%;
-  padding-right: 0;
+/* line 349, ../sass/admin.scss */
+#filament #additional-info #how-to-connect .wrapper .column:nth-child(1) {
+  border-left: none;
 }
-/* line 291, ../sass/admin.scss */
+/* line 350, ../sass/admin.scss */
 #filament #additional-info #how-to-connect .wrapper .column h4 {
-  margin: 0;
+  margin: 2em 0 .25em 0;
   font-size: 16px;
   font-weight: bold;
   color: #8f8f8f;
   line-height: 22px;
 }
-/* line 298, ../sass/admin.scss */
+/* line 357, ../sass/admin.scss */
 #filament #additional-info #how-to-connect .wrapper .column p {
-  margin: 0 0 1em;
+  margin: 0 0 1em 0;
+  font-size: 12px;
   color: #8f8f8f;
 }
-/* line 302, ../sass/admin.scss */
+/* line 361, ../sass/admin.scss */
+#filament #additional-info #how-to-connect .wrapper .column p.active {
+  display: none;
+}
+/* line 363, ../sass/admin.scss */
 #filament #additional-info #how-to-connect .wrapper .column a {
-  color: #5b5b5b;
+  color: #2a2a2a;
+  font-weight: bold;
+}
+/* line 366, ../sass/admin.scss */
+#filament #additional-info #how-to-connect .wrapper .column a.filament-button {
+  display: none;
+}
+/* line 370, ../sass/admin.scss */
+#filament #additional-info #how-to-connect .wrapper .column.active {
+  background: #d4d4d4;
+}
+/* line 372, ../sass/admin.scss */
+#filament #additional-info #how-to-connect .wrapper .column.active:before {
+  border: solid 2px #2a2a2a;
+  background-color: #2a2a2a;
+  color: #fff;
+}
+/* line 377, ../sass/admin.scss */
+#filament #additional-info #how-to-connect .wrapper .column.active h4, #filament #additional-info #how-to-connect .wrapper .column.active p, #filament #additional-info #how-to-connect .wrapper .column.active a, #filament #additional-info #how-to-connect .wrapper .column.active p a {
+  color: #2a2a2a;
+}
+/* line 380, ../sass/admin.scss */
+#filament #additional-info #how-to-connect .wrapper .column.active p.inactive {
+  display: none;
+}
+/* line 381, ../sass/admin.scss */
+#filament #additional-info #how-to-connect .wrapper .column.active p.active {
+  display: block;
+}
+/* line 382, ../sass/admin.scss */
+#filament #additional-info #how-to-connect .wrapper .column.active a.filament-button {
+  min-width: 5em;
+  display: block;
+  color: #fff;
+  text-decoration: none;
+}
+@media only screen and (max-width: 767px) {
+  /* line 324, ../sass/admin.scss */
+  #filament #additional-info #how-to-connect .wrapper .column {
+    height: 20em;
+  }
 }
 @media only screen and (max-width: 480px) {
-  /* line 264, ../sass/admin.scss */
+  /* line 324, ../sass/admin.scss */
   #filament #additional-info #how-to-connect .wrapper .column {
     width: 100%;
+    height: 13em;
+    border-left: none;
+    border-bottom: solid 1px #d4d4d4;
   }
-  /* line 307, ../sass/admin.scss */
+  /* line 397, ../sass/admin.scss */
   #filament #additional-info #how-to-connect .wrapper .column:nth-child(3) {
     width: 100%;
   }
 }
-/* line 314, ../sass/admin.scss */
+/* line 404, ../sass/admin.scss */
 #filament #additional-info #whats-filament-about {
+  margin: 3em 0 0;
   text-align: center;
 }
-/* line 316, ../sass/admin.scss */
+/* line 407, ../sass/admin.scss */
 #filament #additional-info #whats-filament-about img {
   max-width: 100%;
 }
-/* line 321, ../sass/admin.scss */
+/* line 413, ../sass/admin.scss */
+#filament #additional-info .apps p {
+  margin: 2em 0;
+  color: #5b5b5b;
+  font-size: 15px;
+}
+/* line 417, ../sass/admin.scss */
+#filament #additional-info .apps p a {
+  color: #2a2a2a;
+}
+/* line 421, ../sass/admin.scss */
+#filament #additional-info .apps h2 a {
+  color: #5b5b5b;
+  font-size: 1.3em;
+  font-weight: bold;
+  text-decoration: none;
+  border-bottom: 1px solid #5b5b5b;
+}
+/* line 429, ../sass/admin.scss */
 #filament #additional-info .apps > div {
   display: inline-block;
   width: 22%;
   margin: 20px 30px 0;
   position: relative;
 }
-/* line 326, ../sass/admin.scss */
+/* line 434, ../sass/admin.scss */
 #filament #additional-info .apps > div .image-wrapper {
   position: relative;
   overflow: hidden;
   margin-bottom: 5px;
 }
-/* line 330, ../sass/admin.scss */
+/* line 438, ../sass/admin.scss */
 #filament #additional-info .apps > div .image-wrapper img {
   float: left;
 }
-/* line 334, ../sass/admin.scss */
+/* line 442, ../sass/admin.scss */
 #filament #additional-info .apps > div strong {
   color: white;
   font-weight: normal;
@@ -398,13 +530,13 @@
   right: 0;
   left: 0;
 }
-/* line 342, ../sass/admin.scss */
+/* line 450, ../sass/admin.scss */
 #filament #additional-info .apps > div a {
   background: black;
   color: white;
   text-align: center;
   display: inline-block;
-  padding: .45em 0;
+  padding: .65em 0;
   width: 100%;
   line-height: 1em;
   text-decoration: none;
@@ -416,18 +548,18 @@
   -o-border-radius: 3px;
   border-radius: 3px;
 }
-/* line 354, ../sass/admin.scss */
+/* line 462, ../sass/admin.scss */
 #filament #additional-info .apps > div a:hover {
   background: #333333;
 }
 @media only screen and (max-width: 480px) {
-  /* line 342, ../sass/admin.scss */
+  /* line 450, ../sass/admin.scss */
   #filament #additional-info .apps > div a {
     padding: 1em 0;
   }
 }
 @media only screen and (max-width: 480px) {
-  /* line 321, ../sass/admin.scss */
+  /* line 429, ../sass/admin.scss */
   #filament #additional-info .apps > div {
     width: 200px;
     margin-left: auto;
