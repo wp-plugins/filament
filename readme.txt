@@ -3,7 +3,7 @@ Contributors: kynatro, dtelepathy, dtlabs, bethanydt
 Donate link: http://www.dtelepathy.com/
 Tags: Filament, apps, SlideDeck, Google Analytics, Wufoo, Typekit, Qualaroo, Olark, KISSmetrics, Flare, FlipJack, Pinterest, Reddit, ShareThis, Pinterest, Stumbleupon, Twitter, social bar, dtelepathy, dtlabs, Facebook
 Requires at least: 3.0
-Tested up to: 3.8
+Tested up to: 3.9
 License: GPL3
 Stable tag: trunk
 
