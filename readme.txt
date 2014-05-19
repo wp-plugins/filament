@@ -1,32 +1,38 @@
 === Filament ===
-Contributors: kynatro, dtelepathy, dtlabs, bethanydt
+Contributors: kynatro, dtelepathy, dtlabs, bethanydt, heyshawn
 Donate link: http://www.dtelepathy.com/
-Tags: Filament, apps, SlideDeck, Google Analytics, Wufoo, Typekit, Qualaroo, Olark, KISSmetrics, Flare, FlipJack, Pinterest, Reddit, ShareThis, Pinterest, Stumbleupon, Twitter, social bar, dtelepathy, dtlabs, Facebook
+Tags: Filament, apps, SlideDeck, Google Analytics, Mailchimp, Typekit, Flare, Ivy, Passport, Pinterest, Reddit, ShareThis, Stumbleupon, Twitter, Hacker News, Buffer, social bar, dtelepathy, dtlabs, Facebook
 Requires at least: 3.0
 Tested up to: 3.9
 License: GPL3
 Stable tag: trunk
 
-Install &amp; manage all your Web apps from a single place. Connect your website to Filament with this plugin, and never bug your developers again!
+This plugin makes it easy to connect your site to Filament. It gives you access to apps like Flare, Ivy, Passport and more. Managed from one place!
 
 == Description ==
-This plugin enables you to easily connect your website to the Filament app platform. **[Sign up for your free account now!][signup_url]**
+This plugin enables you to easily connect your website to the Filament app platform. Sign up for your free account now! It’s easy, quick and codeless and after connecting your website, adding apps is as simple as drag-and-drop.
 
-Filament lets you install & manage all your favorite Web apps from one place. A single piece of code is all that’s needed to begin dragging & dropping your favorite apps into your website - **you&rsquo;ll never have to bug your developers again!**  Works with Mailchimp, Wufoo, Google Analytics &amp; more!
+Filament lets you install & manage all your favorite Web apps from one place. A single piece of code is all that’s needed to begin dragging & dropping your favorite apps into your website - you’ll never have to bug your developers again!
 
 Get instant access to the following apps:
-
-= CodeDrop =
-Drag & drop any code you like into your website. Use it to quickly place forms and surveys, install analytics, or even append content to your pages.
 
 = Flare =
 Get your content shared more, with beautiful, customizable sharing buttons, insights and analytics (planned feature).
 
+= Ivy =
+Visitors will be prompted with a beautiful sharing interface any time they highlight content on your site for sharing.
+
 = Passport =
 Beautifully display all your online profiles in a tiny, engaging badge on your website.
 
-= FlipJack <em>(coming soon!)</em> =
-Pack your content inside the world’s most interesting button, and deploy it anywhere! Perfect for signup forms, videos, image galleries and more.
+= CodeDrop =
+Drag & drop any code you like into your website. Use it to quickly place forms and surveys, install analytics, or even append content to your pages.
+
+= Mailchimp =
+Drag and drop a Mailchimp form right onto your site.
+
+= Google Analytics =
+The easiest way possible to add the web’s best analytics system to your site without code or FTP required.
 
 *And more on the way!*
 
@@ -35,6 +41,13 @@ Pack your content inside the world’s most interesting button, and deploy it an
 *Built by Digital-Telepathy, makers of SlideDeck*
 
 [signup_url]: http://app.filament.io/users/register?utm_source=filament_wp&utm_medium=link&utm_content=repo&utm_campaign=filament
+
+== Screenshots ==
+
+1. The Filament add code snippet page
+2. Snippet added. Time to go drop some apps!
+3. The Filament dashboard and the growing list of apps you can add via drag-n-drop.
+4. Drag-n-drop fucntionality in action, dropping Passport anywhere you like within your site.
 
 == Installation ==
 
