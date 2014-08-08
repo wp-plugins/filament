@@ -32,6 +32,10 @@
           <?php case "quick-cache": ?>
             It looks like you are running Quick Cache on your site, don't forget to <a href="<?php echo admin_url( 'admin.php?page=quick_cache' ); ?>">Clear cache</a>.
           <?php break; ?>
+
+          <?php case "other": ?>
+            It looks like you are running a server-side caching solution. Don't forget to clear your cache.
+          <?php break; ?>
         <?php } ?>
       </p>
     </div>

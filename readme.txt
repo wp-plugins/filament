@@ -59,6 +59,10 @@ The plugin is simple to install:
 1. Go to the plugin management page and enable the plugin
 
 == Changelog ==
+= 1.2.6 =
+* Change permissions to access Filament menu items for better compatibility with WordPress Network installations
+* Update cache clear message prompt to accommodate for un-known cache systems
+
 = 1.2.5 =
 * Improve user interface flow for easier on-boarding with Filament application
 

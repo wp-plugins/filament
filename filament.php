@@ -3,7 +3,7 @@
 Plugin Name: Filament
 Plugin URI: http://filament.io/
 Description: Install & manage all your Web apps from a single place. Connect your website to Filament with this plugin, and never bug your developers again!
-Version: 1.2.5
+Version: 1.2.6
 Author: dtelepathy
 Author URI: http://www.dtelepathy.com/
 Contributors: kynatro, dtelepathy, dtlabs
@@ -30,7 +30,7 @@ class Filament {
     var $label = "Filament";
     var $slug = "filament";
     var $menu_hooks = array();
-    var $version = '1.2.5';
+    var $version = '1.2.6';
 
     /**
      * Initialize the plugin
@@ -123,10 +123,10 @@ class Filament {
      * @uses add_submenu_page()
      */
     public function admin_menu() {
-        $this->menu_hooks['deploy'] = add_menu_page( $this->label, $this->label, 'edit_themes', $this->slug, array( &$this, 'admin_options' ), plugins_url( 'assets/images/bolt.png', __FILE__ ) );
+        $this->menu_hooks['deploy'] = add_menu_page( $this->label, $this->label, 'edit_theme_options', $this->slug, array( &$this, 'admin_options' ), plugins_url( 'assets/images/bolt.png', __FILE__ ) );
 
         // Sign up for Filament
-        $this->menu_hooks['signup'] = add_submenu_page( $this->slug, $this->label, 'Signup for Filament', 'edit_themes', $this->slug . '/signup', array( &$this, 'admin_options' ) );
+        $this->menu_hooks['signup'] = add_submenu_page( $this->slug, $this->label, 'Signup for Filament', 'edit_theme_options', $this->slug . '/signup', array( &$this, 'admin_options' ) );
     }
 
     /**
