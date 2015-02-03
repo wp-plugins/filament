@@ -3,7 +3,7 @@
 Plugin Name: Filament
 Plugin URI: http://filament.io/
 Description: Install & manage all your Web apps from a single place. Connect your website to Filament with this plugin, and never bug your developers again!
-Version: 1.2.6
+Version: 1.2.7
 Author: dtelepathy
 Author URI: http://www.dtelepathy.com/
 Contributors: kynatro, dtelepathy, dtlabs
@@ -30,7 +30,7 @@ class Filament {
     var $label = "Filament";
     var $slug = "filament";
     var $menu_hooks = array();
-    var $version = '1.2.6';
+    var $version = '1.2.7';
 
     /**
      * Initialize the plugin
@@ -70,6 +70,14 @@ class Filament {
         // Site Structure
         add_action( 'wp_ajax_' . $this->slug . '_taxonomy_structure', array( &$this, 'ajax_taxonomy_structure' ) );
         add_action( 'wp_ajax_nopriv_' . $this->slug . '_taxonomy_structure', array( &$this, 'ajax_taxonomy_structure' ) );
+
+        // StumbleUpon JSONP
+        add_action( 'wp_ajax_' . $this->slug . '_stumbleupon_jsonp', array( &$this, 'ajax_stumbleupon_jsonp' ) );
+        add_action( 'wp_ajax_nopriv_' . $this->slug . '_stumbleupon_jsonp', array( &$this, 'ajax_stumbleupon_jsonp' ) );
+
+        // Google+ JSONP
+        add_action( 'wp_ajax_' . $this->slug . '_googleplus_jsonp', array( &$this, 'ajax_googleplus_jsonp' ) );
+        add_action( 'wp_ajax_nopriv_' . $this->slug . '_googleplus_jsonp', array( &$this, 'ajax_googleplus_jsonp' ) );
     }
 
     /**
@@ -203,6 +211,107 @@ class Filament {
         exit( $data );
     }
 
+    public function ajax_googleplus_jsonp() {
+        # Default header is JSON
+        $header = "application/json";
+        $content_type = "json";
+
+        # URL to lookup
+        $url = $_REQUEST['url'];
+        # JSONP callback function
+        $callback = $_REQUEST['callback'];
+
+        # If a callback is present set header to JSONP
+        if( !empty( $callback ) ) {
+            $header = "application/javascript";
+            $content_type = "jsonp";
+        }
+
+        # Default data values to return
+        $data = array( 'count' => 0 );
+
+        # Transient cache lookup
+        $cache_key = $this->namespace . '-googleplus-' . md5( $url );
+        $response = get_transient( $cache_key );
+
+        # If no transient cache, retrieve the data fresh
+        if( !$response ) {
+            $response = wp_remote_get( "https://plusone.google.com/u/0/_/%2B1/fastbutton?count=true&url=" . $url );
+
+            if( !is_wp_error( $response ) ) {
+                set_transient( $cache_key, $response, 30 );
+            } else {
+                $data['error'] = $response->get_error_message();
+            }
+        }
+
+        # Parse the response to extract the count
+        if( !is_wp_error( $response ) ) {
+            $body = $response['body'];
+
+            $json_obj = substr( $body, strpos( $body, "window.__SSR = {" ) + 15 );
+            $json_obj = substr( $json_obj, 0, strpos( $json_obj, "};" ) + 2 );
+            $json_obj = preg_replace( "/(\s)/", "", $json_obj );
+
+            $matches = array();
+            preg_match( "/c\:([\d\.]+)/", $json_obj, $matches );
+
+            if( !empty( $matches ) ) {
+                $data['count'] = intval( $matches[1] );
+            }
+        }
+
+        # Convert the array to a JSON string
+        $data = json_encode( $data );
+
+        header( "Content-type: " . $header );
+        include( dirname( __FILE__ ) . '/views/_jsonp.php' );
+        exit;
+    }
+
+    public function ajax_stumbleupon_jsonp() {
+        # Default header is JSON
+        $header = "application/json";
+        $content_type = "json";
+
+        # URL to lookup
+        $url = $_REQUEST['url'];
+        # JSONP callback function
+        $callback = $_REQUEST['callback'];
+
+        # If a callback is present set header to JSONP
+        if( !empty( $callback ) ) {
+            $header = "application/javascript";
+            $content_type = "jsonp";
+        }
+
+        # Default data values to return
+        $data = json_encode( array( 'result' => array(
+          'in_index' => false,
+          'views' => 0
+        ) ) );
+
+        # Transient cache lookup
+        $cache_key = $this->namespace . '-stumbleupon-' . md5( $url );
+        $response = get_transient( $cache_key );
+
+        if( !$response ) {
+            $response = wp_remote_get( "http://www.stumbleupon.com/services/1.01/badge.getinfo?url=" . $url );
+
+            if( !is_wp_error( $response ) ) {
+                set_transient( $cache_key, $response, 30 );
+            }
+        }
+
+        if( !is_wp_error( $response ) ) {
+            $data = $response['body'];
+        }
+
+        header( "Content-type: " . $header );
+        include( dirname( __FILE__ ) . '/views/_jsonp.php' );
+        exit;
+    }
+
     /**
      * Initialization function to hook into the WordPress init action
      *
@@ -324,7 +433,11 @@ class Filament {
 
         $namespace = $this->slug;
 
-        include( "views/_meta.php" );
+        # URLs for localized proxying
+        $stumbleupon_url = wp_nonce_url( admin_url( 'admin-ajax.php?action=' . $this->slug . '_stumbleupon_jsonp' ), $this->slug . '_stumbleupon_jsonp' );
+        $googleplus_url = wp_nonce_url( admin_url( 'admin-ajax.php?action=' . $this->slug . '_googleplus_jsonp' ), $this->slug . '_googleplus_jsonp' );
+
+        include( dirname( __FILE__ ) . '/views/_meta.php' );
 
         echo html_entity_decode( get_option( $this->slug . '_single_drop', "" ), ENT_QUOTES, "UTF-8" );
     }

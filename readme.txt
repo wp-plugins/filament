@@ -3,7 +3,7 @@ Contributors: kynatro, dtelepathy, dtlabs, bethanydt, heyshawn
 Donate link: http://www.dtelepathy.com/
 Tags: Filament, apps, SlideDeck, Google Analytics, Mailchimp, Typekit, Flare, Ivy, Passport, Pinterest, Reddit, ShareThis, Stumbleupon, Twitter, Hacker News, Buffer, social bar, dtelepathy, dtlabs, Facebook
 Requires at least: 3.0
-Tested up to: 3.9
+Tested up to: 4.1
 License: GPL3
 Stable tag: trunk
 
@@ -59,6 +59,10 @@ The plugin is simple to install:
 1. Go to the plugin management page and enable the plugin
 
 == Changelog ==
+= 1.2.7 =
+* Add Google+ and StumbleUpon JSONP proxy end-points to improve reliability of Flare and Insights social statistic retrieval and remove dependency on centralized Filament proxy server.
+* Update compatible-up-to version
+
 = 1.2.6 =
 * Change permissions to access Filament menu items for better compatibility with WordPress Network installations
 * Update cache clear message prompt to accommodate for un-known cache systems
@@ -99,6 +103,9 @@ The plugin is simple to install:
 * Initial commit
 
 == Upgrade Notice ==
+= 1.2.7 =
+If you are using Google+ or StumbleUpon in your Flare, this update helps improve social stat retrieval for these networks.
+
 = 1.0.2 =
 Fixed critical form submission bugs, update now!
 
