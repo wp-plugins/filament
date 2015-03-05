@@ -59,6 +59,9 @@ The plugin is simple to install:
 1. Go to the plugin management page and enable the plugin
 
 == Changelog ==
+= 1.2.8 =
+* Add meta tag for detection of previews
+
 = 1.2.7 =
 * Add Google+ and StumbleUpon JSONP proxy end-points to improve reliability of Flare and Insights social statistic retrieval and remove dependency on centralized Filament proxy server.
 * Update compatible-up-to version

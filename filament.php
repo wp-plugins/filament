@@ -3,7 +3,7 @@
 Plugin Name: Filament
 Plugin URI: http://filament.io/
 Description: Install & manage all your Web apps from a single place. Connect your website to Filament with this plugin, and never bug your developers again!
-Version: 1.2.7
+Version: 1.2.8
 Author: dtelepathy
 Author URI: http://www.dtelepathy.com/
 Contributors: kynatro, dtelepathy, dtlabs
@@ -30,7 +30,7 @@ class Filament {
     var $label = "Filament";
     var $slug = "filament";
     var $menu_hooks = array();
-    var $version = '1.2.7';
+    var $version = '1.2.8';
 
     /**
      * Initialize the plugin
@@ -402,6 +402,7 @@ class Filament {
             'is-sticky' => is_sticky(),
             'is-tag' => is_tag(),
             'is-tax' => is_tax(),
+            'is-preview' => is_preview(),
             'post-type' => get_post_type(),
             'categories' => "",
             'tags' => ""
