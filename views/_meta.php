@@ -6,6 +6,6 @@
   window.Filament = window.Filament || {};
   window.Filament.social_stats_urls = window.Filament.social_stats_urls || {};
 
-  window.Filament.social_stats_urls.stumbleupon = "<?php echo $stumbleupon_url; ?>&url=<%- url %>&callback=<%- callback %>";
-  window.Filament.social_stats_urls.googleplus = "<?php echo $googleplus_url; ?>&url=<%- url %>&callback=<%- callback %>";
+  window.Filament.social_stats_urls.stumbleupon = "<?php echo $stumbleupon_url; ?>&url={{url}}&callback={{callback}}";
+  window.Filament.social_stats_urls.googleplus = "<?php echo $googleplus_url; ?>&url={{url}}&callback={{callback}}";
 </script>
