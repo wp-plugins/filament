@@ -3,7 +3,7 @@
 Plugin Name: Filament
 Plugin URI: http://filament.io/
 Description: Install & manage all your Web apps from a single place. Connect your website to Filament with this plugin, and never bug your developers again!
-Version: 1.2.9
+Version: 1.2.10
 Author: dtelepathy
 Author URI: http://www.dtelepathy.com/
 Contributors: kynatro, dtelepathy, dtlabs
@@ -30,7 +30,7 @@ class Filament {
     var $label = "Filament";
     var $slug = "filament";
     var $menu_hooks = array();
-    var $version = '1.2.9';
+    var $version = '1.2.10';
 
     /**
      * Initialize the plugin
@@ -65,7 +65,7 @@ class Filament {
         add_filter( 'plugin_action_links', array( &$this, 'plugin_action_links' ), 10, 2 );
 
         // Custom routing
-        add_action( 'init', array( &$this, 'route' ) );
+        if( !( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) add_action( 'init', array( &$this, 'route' ) );
 
         // Site Structure
         add_action( 'wp_ajax_' . $this->slug . '_taxonomy_structure', array( &$this, 'ajax_taxonomy_structure' ) );
@@ -231,7 +231,7 @@ class Filament {
         $data = array( 'count' => 0 );
 
         # Transient cache lookup
-        $cache_key = $this->namespace . '-googleplus-' . md5( $url );
+        $cache_key = $this->slug . '-googleplus-' . md5( $url );
         $response = get_transient( $cache_key );
 
         # If no transient cache, retrieve the data fresh
@@ -292,7 +292,7 @@ class Filament {
         ) ) );
 
         # Transient cache lookup
-        $cache_key = $this->namespace . '-stumbleupon-' . md5( $url );
+        $cache_key = $this->slug . '-stumbleupon-' . md5( $url );
         $response = get_transient( $cache_key );
 
         if( !$response ) {

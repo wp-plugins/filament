@@ -59,6 +59,9 @@ The plugin is simple to install:
 1. Go to the plugin management page and enable the plugin
 
 == Changelog ==
+= 1.2.10 =
+* Only bind route() action to `init` if not `DOING_AJAX`
+
 = 1.2.9 =
 * Update social stats urls to use {{}} instead of ERB style brackets for templating
 
