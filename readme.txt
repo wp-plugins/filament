@@ -59,6 +59,9 @@ The plugin is simple to install:
 1. Go to the plugin management page and enable the plugin
 
 == Changelog ==
+= 1.2.11 =
+* Fix ampersand encoding in local StumbleUpon and Google+ stats URLs
+
 = 1.2.10 =
 * Only bind route() action to `init` if not `DOING_AJAX`
 
