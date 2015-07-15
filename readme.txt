@@ -59,6 +59,9 @@ The plugin is simple to install:
 1. Go to the plugin management page and enable the plugin
 
 == Changelog ==
+= 1.2.13 =
+* Moved Filament code snippet output to `wp_footer()` instead of `wp_header()`. Meta tags are still output in `wp_header()` however.
+
 = 1.2.12 =
 * Bump "Tested up to" WordPress version to most recent release
 

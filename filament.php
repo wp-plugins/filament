@@ -3,7 +3,7 @@
 Plugin Name: Filament
 Plugin URI: http://filament.io/
 Description: Install & manage all your Web apps from a single place. Connect your website to Filament with this plugin, and never bug your developers again!
-Version: 1.2.12
+Version: 1.2.13
 Author: dtelepathy
 Author URI: http://www.dtelepathy.com/
 Contributors: kynatro, dtelepathy, dtlabs
@@ -30,7 +30,7 @@ class Filament {
     var $label = "Filament";
     var $slug = "filament";
     var $menu_hooks = array();
-    var $version = '1.2.12';
+    var $version = '1.2.13';
 
     /**
      * Initialize the plugin
@@ -58,8 +58,11 @@ class Filament {
         // Admin page load
         add_action( "admin_print_styles-toplevel_page_{$this->slug}", array( &$this, "load_admin_page" ) );
 
-        // Code snippet output
+        // Filament meta output
         add_action( 'wp_head', array( &$this, 'wp_head' ) );
+
+        // Code snippet output
+        add_action( 'wp_footer', array( &$this, 'wp_footer' ) );
 
         // Plugin action link
         add_filter( 'plugin_action_links', array( &$this, 'plugin_action_links' ), 10, 2 );
@@ -380,9 +383,42 @@ class Filament {
     }
 
     /**
-     * Hook into wp_head for Filament code snippet output
+     * Output Filament code snippet in the footer of the page
      *
      * @uses get_option()
+     */
+    public function wp_footer() {
+        echo html_entity_decode( get_option( $this->slug . '_single_drop', "" ), ENT_QUOTES, "UTF-8" );
+    }
+
+    /**
+     * Hook into wp_head for Filament meta tag output
+     *
+     * @global  $wp_query
+     *
+     * @uses admin_url()
+     * @uses get_category()
+     * @uses get_option()
+     * @uses get_post_type()
+     * @uses get_query_var()
+     * @uses is_404()
+     * @uses is_archive()
+     * @uses is_attachment()
+     * @uses is_author()
+     * @uses is_category()
+     * @uses is_front_page()
+     * @uses is_home()
+     * @uses is_page()
+     * @uses is_search()
+     * @uses is_single()
+     * @uses is_singular()
+     * @uses is_sticky()
+     * @uses is_tag()
+     * @uses is_tax()
+     * @uses is_preview()
+     * @uses wp_get_object_terms()
+     * @uses wp_get_post_tags()
+     * @uses wp_nonce_url()
      */
     public function wp_head() {
         global $wp_query;
@@ -439,8 +475,6 @@ class Filament {
         $googleplus_url = wp_nonce_url( admin_url( 'admin-ajax.php?action=' . $this->slug . '_googleplus_jsonp' ), $this->slug . '_googleplus_jsonp' );
 
         include( dirname( __FILE__ ) . '/views/_meta.php' );
-
-        echo html_entity_decode( get_option( $this->slug . '_single_drop', "" ), ENT_QUOTES, "UTF-8" );
     }
 
     function wp_enqueue_admin_scripts(){
